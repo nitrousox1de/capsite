@@ -215,8 +215,8 @@ function initialize() {
             listOfSites.cities[i].lng));
 
         cs_contentString.push("<h2>City: " + listOfSites.cities[i].cname + "</h2>\n" + 
-                              "<p> Monday slots: " + listOfSites.cities[i].monday + "<br />"
-                              " Tuesday slots: " + listOfSites.cities[i].tuesday + "</p>");
+                              "<p> Monday slots: " + listOfSites.cities[i].monday + "<br />" +
+                              "Tuesday slots: " + listOfSites.cities[i].tuesday + "</p>");
         cs_infowindow.push(new google.maps.InfoWindow({
             content: cs_contentString[i] }));
         cs_marker.push(new google.maps.Marker({
