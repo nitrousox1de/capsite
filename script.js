@@ -209,7 +209,7 @@ function initialize() {
 
         cs_contentString.push(listOfSites.cities[i].cname);
         cs_infowindow.push(new google.maps.InfoWindow({
-            content: contentString[i] }));
+            content: cs_contentString[i] }));
         cs_marker.push(new google.maps.Marker({
                         position: cs_latlng[i],
                         map: map,
