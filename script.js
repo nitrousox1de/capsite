@@ -215,8 +215,8 @@ function initialize() {
                         map: map,
                         title: listOfSites.cities[i].cname}));
         google.maps.event.addListener(cs_marker[i], 'click', function() {
-            map.setCenter(marker.getPosition());
-            infowindow.open(map,marker);
+            map.setCenter(cs_marker[i].getPosition());
+            cs_infowindow[i].open(map,cs_marker[i]);
             });
     }
 }
