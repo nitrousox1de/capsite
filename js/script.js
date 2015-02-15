@@ -208,6 +208,17 @@ var map = null;
 var mapOptions = null;
 var dms = null;
 
+function qsort(a) {
+    if (a.length == 0) return [];
+ 
+    var left = [], right = [], pivot = a[0];
+ 
+    for (var i = 1; i < a.length; i++) {
+        a[i].duration < pivot.duration ? left.push(a[i]) : right.push(a[i]);
+    }
+    return qsort(left).concat(pivot, qsort(right));
+}
+
 function map_recenter(latlng,offsetx,offsety) {
     var point1 = map.getProjection().fromLatLngToPoint(
         (latlng instanceof google.maps.LatLng) ? latlng : map.getCenter()
@@ -309,6 +320,7 @@ function process(e){
             order.push(tmp);
           }
         }
+        order = qsort(order);
         tableString = '';
         // Create Table String
         tableString = '<table id="myTable" class="table table-striped"><thead><tr><th>Site</th><th>Duration</th><th>Distance</th></tr></thead><tbody>';
