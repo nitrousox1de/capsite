@@ -210,7 +210,7 @@ function initialize() {
         var marker = new google.maps.Marker({
                         position: cs_latlng[i],
                         map: map,
-                        title: listOfSites.cities[i].cname}));
+                        title: listOfSites.cities[i].cname});
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map,marker);
             });
