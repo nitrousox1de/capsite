@@ -204,7 +204,7 @@ function initialize() {
         cs_latlng.push(new google.maps.LatLng(listOfSites.cities[i].lat, 
             listOfSites.cities[i].lng));
 
-        var contentString = listOfSites.cities[i].name;
+        var contentString = listOfSites.cities[i].cname;
         var infowindow = new google.maps.InfoWindow({
             content: contentString });
         var marker = new google.maps.Marker({
@@ -212,6 +212,7 @@ function initialize() {
                         map: map,
                         title: listOfSites.cities[i].cname});
         google.maps.event.addListener(marker, 'click', function() {
+            map.setCenter(marker.getPosition());
             infowindow.open(map,marker);
             });
         cs_marker.push(marker);
