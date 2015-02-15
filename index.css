@@ -1,0 +1,13 @@
+#information-box {
+/* Sizing */
+    width: 400px;
+    height: 400px;
+/* Positioning */
+    position: absolute;
+    top: 5%;
+    left: 50%;
+/* Margins */
+    margin-left: -200px;
+    
+    background-color: #DCDCDC;
+}
