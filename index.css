@@ -4,10 +4,10 @@
     height: 400px;
 /* Positioning */
     position: absolute;
-    top: 5%;
-    left: 50%;
+    top: 0%;
+    right:0%;
 /* Margins */
-    margin-left: -200px;
-    
+    margin-left: -400px;
+
     background-color: #DCDCDC;
 }
