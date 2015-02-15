@@ -193,6 +193,9 @@ var listOfSites = {
 };
 var cs_latlng = [];
 var cs_marker = [];
+var cs_contentString = [];
+var cs_infowindow = [];
+
 function initialize() {
     var mapOptions = {
       center: { lat: 42.364506, lng: -71.038887},
@@ -204,18 +207,17 @@ function initialize() {
         cs_latlng.push(new google.maps.LatLng(listOfSites.cities[i].lat, 
             listOfSites.cities[i].lng));
 
-        var contentString = listOfSites.cities[i].cname;
-        var infowindow = new google.maps.InfoWindow({
-            content: contentString });
-        var marker = new google.maps.Marker({
+        contentString.push(listOfSites.cities[i].cname);
+        infowindow.push(new google.maps.InfoWindow({
+            content: contentString[i] }));
+        cs_marker.push(new google.maps.Marker({
                         position: cs_latlng[i],
                         map: map,
-                        title: listOfSites.cities[i].cname});
-        google.maps.event.addListener(marker, 'click', function() {
+                        title: listOfSites.cities[i].cname}));
+        google.maps.event.addListener(cs_marker[i], 'click', function() {
             map.setCenter(marker.getPosition());
             infowindow.open(map,marker);
             });
-        cs_marker.push(marker);
     }
 }
 
