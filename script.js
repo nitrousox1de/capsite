@@ -207,7 +207,7 @@ function initialize() {
         cs_marker.push(new google.maps.Marker({
                         position: myLatlng[i],
                         map: map,
-                        title: listOfSites.cities[i].cname});)
+                        title: listOfSites.cities[i].cname}));
     }
 
 }
