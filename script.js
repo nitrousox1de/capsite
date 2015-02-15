@@ -7,6 +7,7 @@ function initialize() {
         mapOptions);
 }
 function mapLoad(){
+    console.log("loaded!");
     google.maps.event.addDomListener(window, 'load', initialize);
 }
 
