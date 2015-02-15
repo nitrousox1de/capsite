@@ -207,8 +207,8 @@ function initialize() {
         cs_latlng.push(new google.maps.LatLng(listOfSites.cities[i].lat, 
             listOfSites.cities[i].lng));
 
-        contentString.push(listOfSites.cities[i].cname);
-        infowindow.push(new google.maps.InfoWindow({
+        cs_contentString.push(listOfSites.cities[i].cname);
+        cs_infowindow.push(new google.maps.InfoWindow({
             content: contentString[i] }));
         cs_marker.push(new google.maps.Marker({
                         position: cs_latlng[i],
