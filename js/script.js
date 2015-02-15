@@ -232,8 +232,6 @@ function map_recenter(latlng,offsetx,offsety) {
         point1.x - point2.x,
         point1.y + point2.y
     )));
-    console.log('x: ' + toString(point1.x - point2.x));
-    console.log('y: ' + point1.y + point2.y);
 }
 
 function setEventListener(map, marker, infowindow){
