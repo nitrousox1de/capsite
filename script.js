@@ -196,6 +196,13 @@ var cs_marker = [];
 var cs_contentString = [];
 var cs_infowindow = [];
 
+function setEventListener(map, marker, infowindow){
+    google.maps.event.addListener(marker, 'click', function() {
+    map.setCenter(marker.getPosition());
+    infowindow.open(map,marker);
+    });
+}
+
 function initialize() {
     var mapOptions = {
       center: { lat: 42.364506, lng: -71.038887},
@@ -214,10 +221,7 @@ function initialize() {
                         position: cs_latlng[i],
                         map: map,
                         title: listOfSites.cities[i].cname}));
-        google.maps.event.addListener(cs_marker[i], 'click', function() {
-            map.setCenter(cs_marker[i].getPosition());
-            cs_infowindow[i].open(map,cs_marker[i]);
-            });
+        setEventListener(map, cs_marker[i], cs_infowindow[i]);
     }
 }
 
