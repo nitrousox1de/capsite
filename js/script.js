@@ -207,6 +207,7 @@ var cs_infowindow = [];
 var map = null;
 var mapOptions = null;
 var dms = null;
+var home_marker = null;
 
 function qsort(a) {
     if (a.length == 0) return [];
@@ -270,6 +271,8 @@ function initialize() {
     }
     cs_latlng_1 = cs_latlng.slice(0,25);
     cs_latlng_2 = cs_latlng.slice(25,cs_latlng.length);
+
+    geocoder = new google.maps.Geocoder();
 }
 var dmrOptions = null;
 var dmr = null;
@@ -281,8 +284,31 @@ var order = [];
 var tmp = null;
 var tableString = null;
 
+var mapclick = false;
+
+var geocoder = null;
+
 function process(e){
     var home = [$('#address').val()];
+    geocoder.geocode( { address: home[0]}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        var image = {
+          url: 'http://maps.google.com/mapfiles/kml/shapes/homegardenbusiness.png',
+          // This marker is 20 pixels wide by 32 pixels tall.
+          scaledSize: new google.maps.Size(24, 24),
+        };
+        if (home_marker !== null) {
+          home_marker.setMap(null);
+        }
+        home_marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+            icon: image
+        });
+      } else {
+        console.log('Geocode was not successful for the following reason: ' + status);
+      }
+    });
     dmrOptions = {
       destinations: cs_latlng_1,
       origins: home,
@@ -325,7 +351,7 @@ function process(e){
         // Create Table String
         tableString = '<table id="myTable" class="table table-striped"><thead><tr><th>Site</th><th>Duration</th><th>Distance</th></tr></thead><tbody>';
         for(k = 0; k < order.length; k++){
-          tableString = tableString + '<tr><td>' + order[k].city + '</td><td>' + order[k].duration_text + '</td><td>' + order[k].distance_text + '</td></tr>';
+          tableString = tableString + '<tr class="myRow" cityname=' + order[k].city + '><td>' + order[k].city + '</td><td>' + order[k].duration_text + '</td><td>' + order[k].distance_text + '</td></tr>';
         }
         tableString = tableString + '</tbody></table>';
         // Insert new element
@@ -391,6 +417,43 @@ $(document).ready(function(){
     } else {
       for (i = 0; i < cs_marker.length; i++){
         cs_marker[i].setVisible(true);
+      }
+    }
+  });
+  $(document).on("mouseenter", ".myRow", function() {
+    mapclick = false;
+    for(i = 0; i < listOfSites.cities.length; i++){
+      if (listOfSites.cities[i].cname != $(this).attr('cityname')){
+        cs_marker[i].setVisible(false);
+      }
+    }
+  });
+  $(document).on("mouseleave", ".myRow", function() {
+    if(!mapclick){
+      for(i = 0; i < listOfSites.cities.length; i++){
+        if ($('#excludeMonday').prop('checked') && $('#excludeTuesday').prop('checked')){
+          for (i = 0; i < cs_marker.length; i++){
+            cs_marker[i].setVisible(false);
+          }
+        } else if (!$('#excludeMonday').prop('checked') && $('#excludeTuesday').prop('checked')) {
+          if (listOfSites.cities[i].monday != "0"){
+            cs_marker[i].setVisible(true);
+          }
+        } else if (!$('#excludeTuesday').prop('checked') && $('#excludeMonday').prop('checked')) {
+          if (listOfSites.cities[i].tuesday != "0"){
+            cs_marker[i].setVisible(true);
+          }
+        } else {
+          cs_marker[i].setVisible(true);
+        }
+      }
+    }
+  });
+  $(document).on("click", ".myRow", function() {
+    mapclick = true;
+    for(i = 0; i < listOfSites.cities.length; i++){
+      if (listOfSites.cities[i].cname != $(this).attr('cityname')){
+        cs_marker[i].setVisible(false);
       }
     }
   });
