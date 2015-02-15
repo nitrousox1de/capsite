@@ -205,7 +205,7 @@ function initialize() {
         cs_latlng.push(new google.maps.LatLng(listOfSites.cities[i].lat, 
             listOfSites.cities[i].lng));
         cs_marker.push(new google.maps.Marker({
-                        position: myLatlng[i],
+                        position: cs_latlng[i],
                         map: map,
                         title: listOfSites.cities[i].cname}));
     }
