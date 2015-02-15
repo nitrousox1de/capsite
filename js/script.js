@@ -208,16 +208,35 @@ var map = null;
 var mapOptions = null;
 var dms = null;
 
+function map_recenter(latlng,offsetx,offsety) {
+    var point1 = map.getProjection().fromLatLngToPoint(
+        (latlng instanceof google.maps.LatLng) ? latlng : map.getCenter()
+    );
+    var point2 = new google.maps.Point(
+        ( (typeof(offsetx) == 'number' ? offsetx : 0) / Math.pow(2, map.getZoom()) ) || 0,
+        ( (typeof(offsety) == 'number' ? offsety : 0) / Math.pow(2, map.getZoom()) ) || 0
+    );  
+    map.setCenter(map.getProjection().fromPointToLatLng(new google.maps.Point(
+        point1.x - point2.x,
+        point1.y + point2.y
+    )));
+    console.log('x: ' + toString(point1.x - point2.x));
+    console.log('y: ' + point1.y + point2.y);
+}
+
 function setEventListener(map, marker, infowindow){
     google.maps.event.addListener(marker, 'click', function() {
-    map.setCenter(marker.getPosition());
+    map_recenter(marker.getPosition(),-200, 0);
+    for (i = 0; i < cs_infowindow.length; i++){
+      cs_infowindow[i].close();
+    }
     infowindow.open(map,marker);
     });
 }
 
 function initialize() {
     mapOptions = {
-      center: { lat: 42.364506, lng: -71.038887},
+      center: { lat: 42.304506, lng: -69.9500},
       zoom: 8
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
@@ -313,6 +332,54 @@ $(document).ready(function(){
     if(e.keyCode == 13) {
       e.preventDefault();
       process(e);
+    }
+  });
+  $('#excludeMonday').change(function(){
+    if ($('#excludeMonday').prop('checked') && $('#excludeTuesday').prop('checked')){
+      for (i = 0; i < cs_marker.length; i++){
+        cs_marker[i].setVisible(false);
+      }
+    } else if ($('#excludeMonday').prop('checked')){
+      for (i = 0; i < cs_marker.length; i++){
+        if (listOfSites.cities[i].tuesday == "0"){
+          cs_marker[i].setVisible(false);
+        }
+      }
+    } else if (!$('#excludeMonday').prop('checked') && $('#excludeTuesday').prop('checked')){
+      for (i = 0; i < cs_marker.length; i++){
+        cs_marker[i].setVisible(true);
+        if (listOfSites.cities[i].monday == "0"){
+          cs_marker[i].setVisible(false);
+        }
+      }
+    } else {
+      for (i = 0; i < cs_marker.length; i++){
+        cs_marker[i].setVisible(true);
+      }
+    }
+  });
+  $('#excludeTuesday').change(function(){
+    if ($('#excludeTuesday').prop('checked') && $('#excludeMonday').prop('checked')){
+      for (i = 0; i < cs_marker.length; i++){
+        cs_marker[i].setVisible(false);
+      }
+    } else if ($('#excludeTuesday').prop('checked')){
+      for (i = 0; i < cs_marker.length; i++){
+        if (listOfSites.cities[i].monday == "0"){
+          cs_marker[i].setVisible(false);
+        }
+      }
+    } else if (!$('#excludeTuesday').prop('checked') && $('#excludeMonday').prop('checked')){
+      for (i = 0; i < cs_marker.length; i++){
+        cs_marker[i].setVisible(true);
+        if (listOfSites.cities[i].tuesday == "0"){
+          cs_marker[i].setVisible(false);
+        }
+      }
+    } else {
+      for (i = 0; i < cs_marker.length; i++){
+        cs_marker[i].setVisible(true);
+      }
     }
   });
 });
