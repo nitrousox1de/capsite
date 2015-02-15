@@ -214,7 +214,7 @@ function initialize() {
         cs_latlng.push(new google.maps.LatLng(listOfSites.cities[i].lat, 
             listOfSites.cities[i].lng));
 
-        cs_contentString.push("<h2>City: " + listOfSites.cities[i].cname + "</h2>\n" + 
+        cs_contentString.push("<h4>" + listOfSites.cities[i].cname + "</h2>\n" + 
                               "<p> Monday slots: " + listOfSites.cities[i].monday + "<br />" +
                               "Tuesday slots: " + listOfSites.cities[i].tuesday + "</p>");
         cs_infowindow.push(new google.maps.InfoWindow({
