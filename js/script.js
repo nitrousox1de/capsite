@@ -43,6 +43,13 @@ var listOfSites = {
       "tuesday": "0"
     },
     {
+      "cname": "Burlington",
+      "lat": "42.5047",
+      "lng": "-71.1961",
+      "monday": "2",
+      "tuesday": "1"
+    },
+    {
       "cname": "Charlton",
       "lat": "42.1341",
       "lng": "-71.9690",
@@ -192,9 +199,14 @@ var listOfSites = {
   ]
 };
 var cs_latlng = [];
+var cs_latlng_1 = [];
+var cs_latlng_2 = [];
 var cs_marker = [];
 var cs_contentString = [];
 var cs_infowindow = [];
+var map = null;
+var mapOptions = null;
+var dms = null;
 
 function setEventListener(map, marker, infowindow){
     google.maps.event.addListener(marker, 'click', function() {
@@ -204,12 +216,13 @@ function setEventListener(map, marker, infowindow){
 }
 
 function initialize() {
-    var mapOptions = {
+    mapOptions = {
       center: { lat: 42.364506, lng: -71.038887},
       zoom: 8
     };
-    var map = new google.maps.Map(document.getElementById('map-canvas'),
+    map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
+    dms = new google.maps.DistanceMatrixService();
     for (i = 0; i < listOfSites.cities.length; i++) { // Create LatLng object for each site
         cs_latlng.push(new google.maps.LatLng(listOfSites.cities[i].lat, 
             listOfSites.cities[i].lng));
@@ -225,6 +238,83 @@ function initialize() {
                         title: listOfSites.cities[i].cname}));
         setEventListener(map, cs_marker[i], cs_infowindow[i]);
     }
+    cs_latlng_1 = cs_latlng.slice(0,25);
+    cs_latlng_2 = cs_latlng.slice(25,cs_latlng.length);
 }
+var dmrOptions = null;
+var dmr = null;
+var responses = null;
+var status = null;
+var status2 = null;
+
+var order = [];
+var tmp = null;
+var tableString = null;
+
+function process(e){
+    var home = [$('#address').val()];
+    dmrOptions = {
+      destinations: cs_latlng_1,
+      origins: home,
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.IMPERIAL
+    };
+    dms.getDistanceMatrix(dmrOptions, function(DistanceMatrixResponse, DistanceMatrixStatus){ 
+      responses = DistanceMatrixResponse.rows[0].elements;
+      status = DistanceMatrixStatus;
+      dmrOptions = {
+        destinations: cs_latlng_2,
+        origins: home,
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.IMPERIAL
+      };
+      dms.getDistanceMatrix(dmrOptions, function(DistanceMatrixResponse, DistanceMatrixStatus){
+        responses = responses.concat(DistanceMatrixResponse.rows[0].elements);
+        status2 = DistanceMatrixStatus;
+        order = [];
+        for (j = 0; j < cs_latlng.length; j++){
+          tmp = {
+            city: listOfSites.cities[j].cname,
+            distance_text: responses[j].distance.text,
+            distance: responses[j].distance.value,
+            duration_text: responses[j].duration.text,
+            duration: responses[j].duration.value
+          };
+          if ($('#excludeMonday').prop('checked') && $('#excludeTuesday').prop('checked')){
+            // Do nothing
+          } else if ( $('#excludeMonday').prop('checked') && listOfSites.cities[j].tuesday == "0") {
+            // Do nothing
+          } else if ( $('#excludeTuesday').prop('checked') && listOfSites.cities[j].monday == "0") {
+            // Do nothing
+          } else {
+            order.push(tmp);
+          }
+        }
+        tableString = '';
+        // Create Table String
+        tableString = '<table id="myTable" class="table table-striped"><thead><tr><th>Site</th><th>Duration</th><th>Distance</th></tr></thead><tbody>';
+        for(k = 0; k < order.length; k++){
+          tableString = tableString + '<tr><td>' + order[k].city + '</td><td>' + order[k].duration_text + '</td><td>' + order[k].distance_text + '</td></tr>';
+        }
+        tableString = tableString + '</tbody></table>';
+        // Insert new element
+        $('#myTable').remove()
+        $('#table-area').append(tableString);
+      });
+    });
+}
+
+$(document).ready(function(){
+  $('#find').on('click', function (e) {
+    e.preventDefault();
+    process(e);
+  });
+  $('form input').keydown(function(e){
+    if(e.keyCode == 13) {
+      e.preventDefault();
+      process(e);
+    }
+  });
+});
 
 google.maps.event.addDomListener(window, 'load', initialize);

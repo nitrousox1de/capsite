@@ -4,15 +4,47 @@
     <style type="text/css">
       html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
     </style>
-    <link href="index.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js">
     </script>
-    <script type="text/javascript" src="script.js">
-    </script>
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" 
+href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+<script type="text/javascript" 
+src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
   </head>
   <body>
     <div id="map-canvas"></div>
-    <div id="information-box"></div>
+    <div id="credits">Created by Andrew Li</div>
+    <div id="information-box">
+      <div id="input-area">
+        <div id="input-area-form">
+        <form class="form-inline">
+          <div class="form-group">
+            <input class="form-control input-lg" id="address" type="text" placeholder="Enter your address">
+          </div>
+          <button type="button" class="btn btn-default" id="find">Find</button>
+        </form>
+        </div>
+        <div id="input-area-boxes">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="excludeMonday" value=""> Exclude Monday
+            </label>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" id="excludeTuesday" value=""> Exclude Tuesday
+            </label>
+          </div>
+        </div>
+      </div>
+      <div id="table-area"></div>
+    </div>
   </body>
 </html>
