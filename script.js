@@ -1,5 +1,3 @@
-
-
 function initialize() {
     var mapOptions = {
       center: { lat: 42.364506, lng: -71.038887},
