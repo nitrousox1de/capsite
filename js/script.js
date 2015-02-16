@@ -420,8 +420,14 @@ $(document).ready(function(){
   });
   $(document).on("mouseenter", ".myRow", function() {
     mapclick = false;
+    var cname = "";
     for(i = 0; i < listOfSites.cities.length; i++){
-      if (listOfSites.cities[i].cname != $(this).attr('cityname')){
+      if (listOfSites.cities[i].cname.split(" ").length > 1){
+        cname = listOfSites.cities[i].cname.substr(0, listOfSites.cities[i].cname.indexOf(" "));
+      } else {
+        cname = listOfSites.cities[i].cname
+      }
+      if (cname != $(this).attr('cityname')){
         cs_marker[i].setVisible(false);
       }
     }
@@ -450,7 +456,12 @@ $(document).ready(function(){
   $(document).on("click", ".myRow", function() {
     mapclick = true;
     for(i = 0; i < listOfSites.cities.length; i++){
-      if (listOfSites.cities[i].cname != $(this).attr('cityname')){
+      if (listOfSites.cities[i].cname.split(" ").length > 1){
+        cname = listOfSites.cities[i].cname.substr(0, listOfSites.cities[i].cname.indexOf(" "));
+      } else {
+        cname = listOfSites.cities[i].cname
+      }
+      if (cname != $(this).attr('cityname')){
         cs_marker[i].setVisible(false);
       }
     }
