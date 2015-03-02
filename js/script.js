@@ -127,6 +127,13 @@ var listOfSites = {
       "tuesday": "1"
     },
     {
+      "cname": "Middleton",
+      "lat": "42.5950",
+      "lng": "-71.0167",
+      "monday": "1",
+      "tuesday": "0"
+    },
+    {
       "cname": "Needham",
       "lat": "42.2833",
       "lng": "-71.2333",
