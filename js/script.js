@@ -162,6 +162,13 @@ var listOfSites = {
       "tuesday": "1"
     },
     {
+      "cname": "Somerville",
+      "lat": "42.3875",
+      "lng": "-71.1000",
+      "monday": "1",
+      "tuesday": "0"
+    },
+    {
       "cname": "South Hamilton",
       "lat": "42.6197",
       "lng": "-70.8548",
