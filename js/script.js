@@ -8,6 +8,13 @@ var listOfSites = {
       "tuesday": "3"
     },
     {
+      "cname": "Beverly",
+      "lat": "42.5580",
+      "lng": "-70.8800",
+      "monday": "0",
+      "tuesday": "1"
+    }
+    {
       "cname": "Boston",
       "lat": "42.3581",
       "lng": "-71.0636",
