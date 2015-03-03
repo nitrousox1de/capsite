@@ -13,7 +13,7 @@ var listOfSites = {
       "lng": "-70.8800",
       "monday": "0",
       "tuesday": "1"
-    }
+    },
     {
       "cname": "Boston",
       "lat": "42.3581",
