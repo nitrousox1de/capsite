@@ -312,6 +312,7 @@ function process(e){
         });
       } else {
         console.log('Geocode was not successful for the following reason: ' + status);
+        return;
       }
     });
     dmrOptions = {
