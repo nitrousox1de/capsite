@@ -120,6 +120,13 @@ var listOfSites = {
       "tuesday": "1"
     },
     {
+      "cname": "Malden",
+      "lat": "42.428549",
+      "lng": "-71.060597",
+      "monday": "1",
+      "tuesday": "0"
+    },
+    {
       "cname": "Manchester",
       "lat": "42.5778",
       "lng": "-70.7694",
