@@ -36,6 +36,13 @@ var listOfSites = {
       "tuesday": "0"
     },
     {
+      "cname": "Brighton",
+      "lat": "42.3500",
+      "lng": "-71.1600",
+      "monday": "0",
+      "tuesday": "1"
+    },
+    {
       "cname": "Brockton",
       "lat": "42.0833",
       "lng": "-71.0189",
